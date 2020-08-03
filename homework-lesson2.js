@@ -32,7 +32,7 @@ function processData(input) {
 
 function makeRandomFn(...args) {
     return function() {
-        let arr = args.flat();
+        const arr = args.flat();
         return arr[Math.floor(Math.random() * arr.length)];
     }
 }
