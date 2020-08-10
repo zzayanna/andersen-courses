@@ -11,8 +11,7 @@ Grid.prototype.getTableSize = function () {
 }
 
 Grid.prototype.scrollOnOff = function () {
-    (this.isScrollable) ? 
-        this.isScrollable = false : this.isScrollable = true; 
+    this.isScrollable = !this.isScrollable;  
 }
 
 Grid.prototype.addRow = function () {
@@ -50,7 +49,9 @@ const dataForUserTable = [
 ]
 
 function User(isScrollable, rows, columns, data, background) {
-    Grid.call(this, isScrollable, rows, columns);
+    this.isScrollable = isScrollable;
+    this.rows = rows;
+    this.columns = columns;
     this.data = data;
     this.background = background;
 }
@@ -106,7 +107,8 @@ const dataForOrderTable = [
 
 
 function Order(isScrollable, rows, data, borderColor) {
-    Grid.call(this, isScrollable, rows);
+    this.isScrollable = isScrollable;
+    this.rows = rows;
     this.columns = 3;
     this.data = data;
     this.borderColor = borderColor;
@@ -128,8 +130,7 @@ Order.prototype.findOrderById = function (id) {
 
 Order.prototype.changeStatus = function (id) {
     const orderFound = this.findOrderById(id);
-    (orderFound.isCompleted) ? 
-        orderFound.isCompleted = false : orderFound.isCompleted = true; 
+    orderFound.isCompleted = !orderFound.isCompleted;  
 }
 
 Order.prototype.addRow = function (newRow) {

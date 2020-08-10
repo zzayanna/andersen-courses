@@ -13,8 +13,7 @@ class Grid {
     }
 
     scrollOnOff () {
-        (this.isScrollable) ? 
-            this.isScrollable = false : this.isScrollable = true; 
+        this.isScrollable = !this.isScrollable; 
     }
 
     addRow () {
@@ -27,6 +26,7 @@ class Grid {
 
 }
 
+const grid = new Grid (true, 3, 4);
 
 
 const dataForUserTable = [
@@ -133,8 +133,7 @@ class Order extends Grid {
 
     changeStatus (id) {
         const orderFound = this.findOrderById(id);
-        (orderFound.isCompleted) ? 
-            orderFound.isCompleted = false : orderFound.isCompleted = true; 
+        orderFound.isCompleted = !orderFound.isCompleted; 
     }
 
     addRow (newRow) {
@@ -149,6 +148,3 @@ class Order extends Grid {
 }
 
 const order1 = new Order(true, 4, dataForOrderTable, 'black');
-
-
-
