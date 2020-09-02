@@ -10,24 +10,17 @@ const quantityById = {
 };
 
 function getQuantityOfStudents(id) {
-	if (id in quantityById) {
-		for (let key in quantityById) {
-			if (key === id) {
-				userObject1.groupSize = quantityById[key];
-			}
-		}
-	} else {
+	if (!(id in quantityById)) {
 		throw new Error('Invalid user id!');
 	}
+	userObject1.groupSize = quantityById[id];
 }
 
 function generateEmail(role) {
 	return `user${Math.floor(Math.random() * 1000)}@${role}.com`;
 }
 
-
 // Variant 1: admin, group size - ok
-
 
 const promise1 = new Promise((resolve) => {
 	setTimeout(() => resolve('Minsk'), 1000);
@@ -50,26 +43,22 @@ promise1.then(city => {
 	.then(id => {
 		userObject1.id = id;
 		return new Promise((resolve, reject) => {
-			if (userObject1.role === 'admin') {
-				getQuantityOfStudents(id);
-			} else {
+			if (!(userObject1.role === 'admin')) {
 				throw new Error('Insufficient access rights! User is not admin.');
 			}
+			getQuantityOfStudents(id);
 			setTimeout(() => resolve(['Саша', 'Влад', 'Юля', 'Андрей', 'Богдан']), 1000);
 		})
 	})
 	.then(students => {
-		if (students.length <= userObject1.groupSize) {
-			userObject1.students = students;
-		} else {
+		if (!(students.length <= userObject1.groupSize)) {
 			throw new Error('Too many students for this admin!');
 		}
+		userObject1.students = students;
 	})
 	.catch(err => console.error(err))
 
-
 // Variant 2: admin, group size - too many
-
 
 const promise2 = new Promise((resolve) => {
 	setTimeout(() => resolve('Borisov'), 1000);
@@ -92,63 +81,55 @@ promise2.then(city => {
 	.then(id => {
 		userObject2.id = id;
 		return new Promise((resolve, reject) => {
-			if (userObject2.role === 'admin') {
-				getQuantityOfStudents(id);
-			} else {
+			if (!(userObject2.role === 'admin')) {
 				throw new Error('Insufficient access rights! User is not admin.');
 			}
+			getQuantityOfStudents(id);
 			setTimeout(() => resolve(['Саша', 'Влад', 'Юля', 'Андрей', 'Богдан']), 1000);
 		})
 	})
 	.then(students => {
-		if (students.length <= userObject2.groupSize) {
-			userObject2.students = students;
-		} else {
+		if (!(students.length <= userObject2.groupSize)) {
 			throw new Error('Too many students for this admin!');
 		}
+		userObject2.students = students;
 	})
 	.catch(err => console.error(err))
 
+// // Variant 3: not admin
 
-// Variant 3: not admin
+const promise3 = new Promise((resolve) => {
+	setTimeout(() => resolve('Minsk'), 1000);
+})
 
-
-	const promise3 = new Promise((resolve) => {
-		setTimeout(() => resolve('Minsk'), 1000);
+promise3.then(city => {
+	userObject3.city = city;
+	return new Promise((resolve) => {
+		setTimeout(() => resolve('guest'), 4000);
 	})
-	
-	promise3.then(city => {
-		userObject3.city = city;
+})
+	.then(role => {
+		userObject3.role = role;
+		const EMAIL = generateEmail(role);
+		userObject3.email = EMAIL;
 		return new Promise((resolve) => {
-			setTimeout(() => resolve('guest'), 4000);
+			setTimeout(() => resolve('2'), 2000);
 		})
 	})
-		.then(role => {
-			userObject3.role = role;
-			const EMAIL = generateEmail(role);
-			userObject3.email = EMAIL;
-			return new Promise((resolve) => {
-				setTimeout(() => resolve('2'), 2000);
-			})
-		})
-		.then(id => {
-			userObject3.id = id;
-			return new Promise((resolve, reject) => {
-				if (userObject3.role === 'admin') {
-					getQuantityOfStudents(id);
-				} else {
-					throw new Error('Insufficient access rights! User is not admin.');
-				}
-				setTimeout(() => resolve(['Саша', 'Влад', 'Юля', 'Андрей', 'Богдан']), 1000);
-			})
-		})
-		.then(students => {
-			if (students.length <= userObject3.groupSize) {
-				userObject3.students = students;
-			} else {
-				throw new Error('Too many students for this admin!');
+	.then(id => {
+		userObject3.id = id;
+		return new Promise((resolve, reject) => {
+			if (!(userObject3.role === 'admin')) {
+				throw new Error('Insufficient access rights! User is not admin.');
 			}
+			getQuantityOfStudents(id);
+			setTimeout(() => resolve(['Саша', 'Влад', 'Юля', 'Андрей', 'Богдан']), 1000);
 		})
-		.catch(err => console.error(err))
-
-
+	})
+	.then(students => {
+		if (!(students.length <= userObject3.groupSize)) {
+			throw new Error('Too many students for this admin!');
+		}
+		userObject3.students = students;
+	})
+	.catch(err => console.error(err))
