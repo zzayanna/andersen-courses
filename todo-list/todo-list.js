@@ -36,13 +36,13 @@ function createList () {
     const list = document.querySelector('.list');
     list.innerHTML = '';
   
-    for (let i = 0; i < todos.length; i++) {
+    todos.forEach((todo) => {
       const item = document.createElement('li');
       item.className = 'list__item';
   
       const itemText = document.createElement('p');
       itemText.className = 'list__item__text';
-      itemText.innerHTML = `${todos[i]}`;
+      itemText.innerHTML = `${todo}`;
   
       const editButton = document.createElement('span');
       editButton.classList.add('button', 'edit');
@@ -54,7 +54,7 @@ function createList () {
   
       item.append(itemText, editButton, deleteButton);
       list.append(item);
-    }
+    });
   
     addListeners();
 }
