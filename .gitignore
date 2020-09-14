@@ -14,5 +14,5 @@
 .history
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
-package-lock.json
 node_modules
+package-lock.json
